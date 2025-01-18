@@ -6,18 +6,16 @@ const urlSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
-    redirectUrl: {  // Change from 'url' to 'redirectUrl'
+    redirectUrl: {
         type: String,
         required: true,
         unique: true,
     },
     visitHistory: [
-        { timestamps: { type: Number } }
+        { timestamps: { type: Date, default: Date.now } }
     ],
 },
     { timestamps: true }
 );
-
 const Url = mongoose.model('Url', urlSchema);
-
 export default Url;
