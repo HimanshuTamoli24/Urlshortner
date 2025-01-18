@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts (Minimalistic Font: Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 text-gray-900 font-sans" style="font-family: 'Inter', sans-serif;">
+
+    <div class="container mx-auto p-6">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-semibold text-[#006663]">URL Shortener</h1>
+        </header>
+
+        <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+            <% if (locals.id) { %>
+                <p class="text-lg mb-4">Your shortened URL is:</p>
+                <a href="http://localhost:8009/<%= locals.id %>" class="text-blue-600 hover:text-blue-800 text-xl">
+                    http://localhost:8009/<%= locals.id %>
+                </a>
+                <% } else { %>
+                    <p class="text-lg mb-4">Please enter a long URL below:</p>
+                    <% } %>
+
+                        <form action="/url" method="POST" class="flex flex-col gap-4">
+                            <label for="longUrl" class="text-sm font-medium">Enter your long URL:</label>
+                            <input type="text" id="longUrl" name="redirecturl" required placeholder="http://example.com"
+                                class="p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#006663]">
+                            <button type="submit"
+                                class="bg-[#006663] text-white py-3 rounded-lg hover:bg-[#004d40] transition-colors duration-200">
+                                Generate Shortened URL
+                            </button>
+                        </form>
+        </div>
+
+        <% if (locals.urls) { %>
+            <div class="bg-white shadow-md rounded-lg p-6">
+                <table class="w-full table-auto">
+                    <thead>
+                        <tr class="bg-[#006663] text-white">
+                            <th class="p-3 text-left">S.no</th>
+                            <th class="p-3 text-left">Short ID</th>
+                            <th class="p-3 text-left">Redirect URL</th>
+                            <th class="p-3 text-left">Clicks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% locals.urls.forEach((url, index)=> { %>
+                            <tr class="border-b border-gray-200">
+                                <td class="p-3">
+                                    <%= index + 1 %>
+                                </td>
+                                <td class="p-3">
+                                    <%= url.shortId %>
+                                </td>
+                                <td class="p-3">
+                                    <a href="<%= url.redirectUrl %>" class="text-blue-600 hover:text-blue-800">
+                                        <%= url.redirectUrl %>
+                                    </a>
+                                </td>
+                                <td class="p-3">
+                                    <%= url.visitHistory.length %>
+                                </td>
+                            </tr>
+                            <% }); %>
+                    </tbody>
+                </table>
+            </div>
+            <% } %>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/main.js"></script>
+</body>
+
+</html>

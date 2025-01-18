@@ -22,7 +22,9 @@ async function handleUrl(req, res) {
                 visitHistory: [],
 
             })
-        res.json({ shortUrl: shortID })
+        return res.render("home", {
+            id: shortID,
+        })
     } catch (error) {
         console.error(error)
         res.status(500).json({ error: "Failed to create URL" })
@@ -52,7 +54,6 @@ async function handleAnalatics(req, res) {
         res.status(500).json({ error: "Failed to analyze URL" });
     }
 }
-
 export {
     handleUrl,
     handleAnalatics
