@@ -1,19 +1,7 @@
 import express from 'express';
-import Url from '../models/url.js';
+import { handleStaticRoutes } from '../controllers/url.js';
 const staticRouter = express.Router();
-
-staticRouter.get('/', async (req, res) => {
-    try {
-        const allUrls = await Url.find({});  // Correct method to fetch all documents
-
-        return res.render("home", {
-            urls: allUrls,
-            title: "URL Shortener"
-        });
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("Server error");
-    }
-});
+// Use the controller function for the route
+staticRouter.get('/', handleStaticRoutes);
 
 export default staticRouter;

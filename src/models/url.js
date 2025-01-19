@@ -6,6 +6,7 @@ const urlSchema = new mongoose.Schema({
         required: true,
         unique: true,
     },
+    
     redirectUrl: {
         type: String,
         required: true,
