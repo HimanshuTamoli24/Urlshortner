@@ -1,4 +1,7 @@
 import { User } from "../models/user.js"
+import { v4 as uuidv4 } from 'uuid';
+import { setUser } from "../service/auth.js";
+
 async function handleUserSignup(req, res) {
     try {
         const { username, email, password } = req.body
@@ -25,6 +28,9 @@ async function handleUserLogin(req, res) {
         if (!loginUser) {
             return res.status(401).render("login", { error: "Invalid credentials" })
         }
+        const sessionId =uuidv4()
+        setUser(sessionId, loginUser)
+        res.cookie("session_id", sessionId, { httpOnly: true })
         return res.redirect("/")
     } catch (error) {
         console.error(error)
