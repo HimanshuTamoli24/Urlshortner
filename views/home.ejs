@@ -20,7 +20,7 @@
         <div class="bg-white shadow-md rounded-lg p-6 mb-6">
             <% if (locals.id) { %>
                 <p class="text-lg mb-4">Your shortened URL is:</p>
-                <a href="http://localhost:8009/url/ <%= locals.id %>" class="text-blue-600 hover:text-blue-800 text-xl">
+                <a href="http://localhost:8009/url/<%= locals.id %>" class="text-blue-600 hover:text-blue-800 text-xl">
                     http://localhost:8009/url/<%= locals.id %>
                 </a>
                 <% } else { %>

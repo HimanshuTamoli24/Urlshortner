@@ -13,6 +13,6 @@ urlRouter.post('/', handleUrl);
 urlRouter.get("/:shortId", handleRedirectUrl);
 
 // Analytics route for shortened URL
-urlRouter.get('/analytics/:shortID', handleAnalatics);
+urlRouter.get('/analytics/:shortID', handleAnalatics); 
 
 export default urlRouter;

@@ -10,14 +10,14 @@ async function handleUrl(req, res) {
 
         // Validate the provided URL
         if (!redirecturl || typeof redirecturl !== 'string' || !redirecturl.trim()) {
-            return res.status(400).json({ error: "Please provide a valid URL" });
+            return res.status(400).render("error", { errorMessage: "Please provide a valid URL" });
         }
 
         // Check if the URL already exists
         const existingUrl = await Url.findOne({ redirectUrl: redirecturl });
         if (existingUrl) {
-            return res.status(400).json({
-                error: 'This URL has already been shortened',
+            return res.status(400).render("error", {
+                errorMessage: 'This URL has already been shortened',
                 shortUrl: existingUrl.shortId,
             });
         }
@@ -33,7 +33,7 @@ async function handleUrl(req, res) {
         return res.render("home", { id: shortID });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to create URL" });
+        res.status(500).render("error", { errorMessage: "Failed to create URL" });
     }
 }
 
@@ -48,7 +48,7 @@ async function handleAnalatics(req, res) {
 
         // If URL not found, return an error
         if (!result) {
-            return res.status(404).json({ error: "URL not found" });
+            return res.status(404).render("error", { errorMessage: "URL not found" });
         }
 
         // Return the analytics (clicks and visit history)
@@ -58,7 +58,7 @@ async function handleAnalatics(req, res) {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to analyze URL" });
+        res.status(500).render("error", { errorMessage: "Failed to analyze URL" });
     }
 }
 
@@ -75,21 +75,19 @@ async function handleRedirectUrl(req, res) {
 
         // If no matching short ID, return an error
         if (!entry) {
-            return res.status(404).json({ error: "Short ID not found" });
+            return res.status(404).render("error", { errorMessage: "Short ID not found" });
         }
 
         // Redirect the user to the original URL
         res.redirect(entry.redirectUrl);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to retrieve URL" });
+        res.status(500).render("error", { errorMessage: "Failed to retrieve URL" });
     }
 }
-
 
 export {
     handleUrl,
     handleAnalatics,
     handleRedirectUrl,
-  
 };

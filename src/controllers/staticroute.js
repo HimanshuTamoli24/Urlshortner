@@ -16,7 +16,7 @@ async function handleStaticRoutes(req, res) {
         });
     } catch (err) {
         console.error(err);
-        res.status(500).send("Server error");
+        res.status(500).render("error", { errorMessage:"Server error"});
     }
 }
 
@@ -29,9 +29,13 @@ async function handleSignupRoutes(req, res) {
 async function handleLoginRoutes(req, res) {
     return res.render("login")
 }
+async function handleErrorRoutes(req, res) {
+    return res.status(404).render("error")
+}
 
 export {
     handleStaticRoutes,
     handleSignupRoutes,
     handleLoginRoutes,
+    handleErrorRoutes
 };

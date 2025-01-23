@@ -13,4 +13,5 @@ async function restrictToLoggedInUserOnly(req, res, next) {
     req.user = user;
     next();
 }
+
 export default restrictToLoggedInUserOnly;
